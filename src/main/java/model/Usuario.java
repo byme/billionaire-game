@@ -5,10 +5,10 @@ public class Usuario {
     private int puntaje;
     private int preguntas;
 
-    public Usuario(String nombre, int puntaje, int preguntas) {
+    public Usuario(String nombre) {
         this.nombre = nombre;
-        this.puntaje = puntaje;
-        this.preguntas = preguntas;
+        this.puntaje = 0;
+        this.preguntas = 0;
     }
 
     public String getNombre() {
