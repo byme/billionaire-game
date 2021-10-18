@@ -6,14 +6,28 @@ public class Pregunta {
     private int categoria;
     private List<String> opciones;
     private String opcionCorrecta;
+    private String pregunta;
     private boolean estado;
 
-    public Pregunta(int categoria, List<String> opciones, String opcionCorrecta, boolean estado) {
+    public Pregunta(int categoria, List<String> opciones, String opcionCorrecta,String pregunta) {
         this.categoria = categoria;
         this.opciones = opciones;
         this.opcionCorrecta = opcionCorrecta;
-        this.estado = estado;
+        this.estado = false;
+        this.pregunta=pregunta;
     }
+
+
+
+
+    public String getPregunta() {
+        return pregunta;
+    }
+
+    public void setPregunta(String pregunta) {
+        this.pregunta = pregunta;
+    }
+
 
     public int getCategoria() {
         return categoria;
