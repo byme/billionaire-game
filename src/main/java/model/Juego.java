@@ -1,61 +1,112 @@
 package model;
 
-import java.util.List;
+import controller.Consulta;
 
-public class Juego {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+
+public class Juego extends Consulta {
     private int nivel;
     private Usuario jugador;
     private Pregunta pregunta;
     private boolean estadoJuego;
     private List<Integer> premios;
 
-    public Juego(){
 
-    }
-    public Juego( Usuario jugador,List<Integer> premios) {
+    public Juego( ) {
         this.nivel = 1;
         this.jugador = jugador;
         this.estadoJuego = false;
-        this.premios = premios;
+        this.premios = Arrays.asList(1000,2000,3000,4000,10000);
     }
 
-    public int getNivel() {
-        return nivel;
+    public void actualizarEstadoJuego(String respuestaValidadaUsuario){
+        if ( respuestaValidadaUsuario.contains("retirado")){
+            System.out.println("Su puntaje fue:"+this.jugador.getPuntaje());
+            insertarResultadoJugador(this.jugador.getNombre(),this.jugador.getPuntaje(),
+                    this.jugador.getPreguntas());
+            this.estadoJuego=true;
+
+        }else if(respuestaValidadaUsuario.contains("continua")){
+            this.actualizarDatoJugador();
+            this.aumentarNivel();
+        }else{
+            //obción en la que pierde y no se lleva nada
+            System.out.println("No se lleva premio");
+            this.estadoJuego=true;
+            insertarResultadoJugador(this.jugador.getNombre(),0,
+            this.jugador.getPreguntas());
+        }
     }
 
-    public void setNivel(int nivel) {
-        this.nivel = nivel;
+
+    public String validarRespuesta(String respuesta){
+        if (respuesta.toLowerCase().contains("e")){
+           return "retirado";
+        }else if(respuesta.toLowerCase().contains(this.pregunta.getOpcionCorrecta())){
+            return "continua";
+        }else {
+            return "fail";
+        }
     }
 
-    public Usuario getJugador() {
-        return jugador;
+    public boolean validarSintaxisRespuesta(String respuesta){
+            if (respuesta.toLowerCase().matches("a|b|c|d|e")){
+                return true;
+            }else{
+                return false;
+            }
     }
 
-    public void setJugador(Usuario jugador) {
-        this.jugador = jugador;
+
+    public void actualizarDatoJugador(){
+        this.jugador.setPreguntas(this.nivel);
+        this.jugador.setPuntaje(jugador.getPuntaje()+this.premios.get(this.nivel-1));
     }
 
-    public Pregunta getPregunta() {
-        return pregunta;
+    //mensajes
+    public void mensajeDeReingresoDato(){
+        System.out.print("Ingreso una obción que no exite, ingrese de nuevo la obción:");
     }
 
-    public void setPregunta(Pregunta pregunta) {
-        this.pregunta = pregunta;
+    public void mensajeAdios(){System.out.println("Ha terminado el juego");}
+
+    public void mostrarPregunta(){
+        System.out.println(this.pregunta.getPregunta());
+        System.out.println("a)"+this.pregunta.getOpciones().get(0));
+        System.out.println("b)"+this.pregunta.getOpciones().get(1));
+        System.out.println("c)"+this.pregunta.getOpciones().get(2));
+        System.out.println("d)"+this.pregunta.getOpciones().get(3));
+        System.out.println("e)"+"Con esta opción se retira y se lleva lo que acomule");
+        System.out.print("Indique su respuesta a,b,c,d o e: ");
+
     }
 
-    public boolean isEstadoJuego() {
-        return estadoJuego;
-    }
+    public void asignarPregunta(){this.pregunta=obtenerPregunta(this.nivel);}
 
-    public void setEstadoJuego(boolean estadoJuego) {
-        this.estadoJuego = estadoJuego;
-    }
+    public void asignarUsuario(String nombre){this.jugador=new Usuario(nombre);}
 
-    public List<Integer> getPremios() {
-        return premios;
-    }
+    public void aumentarNivel() {this.nivel++;}
 
-    public void setPremios(List<Integer> premios) {
-        this.premios = premios;
-    }
+    public int getNivel() {return nivel;}
+
+    public void setNivel(int nivel) {this.nivel = nivel;}
+
+    public Usuario getJugador() {return jugador;}
+
+    public void setJugador(Usuario jugador) {this.jugador = jugador;}
+
+    public Pregunta getPregunta() {return pregunta;}
+
+    public void setPregunta(Pregunta pregunta) {this.pregunta = pregunta;}
+
+    public boolean isEstadoJuego() {return estadoJuego;}
+
+    public void setEstadoJuego(boolean estadoJuego) {this.estadoJuego = estadoJuego;}
+
+    public List<Integer> getPremios() {return premios;}
+
+    public void setPremios(List<Integer> premios) {this.premios = premios;}
 }

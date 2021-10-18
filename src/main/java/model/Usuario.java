@@ -11,6 +11,8 @@ public class Usuario {
         this.preguntas = 0;
     }
 
+
+
     public String getNombre() {
         return nombre;
     }
