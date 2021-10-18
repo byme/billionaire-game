@@ -30,9 +30,9 @@ public class conectar {
 
 //            jdbc:postgresql://<host>:<port>/<dbname>?sslmode=require&user=<username>&password=<password>
             if (conexion != null) {
-                System.out.println("conexión exitosa con la base de datos");
+                System.out.println("");
             } else {
-                System.out.println("conexion fallo");
+                System.out.println("conexion a la base de datos fallo");
             }
         } catch (Exception e) {
 

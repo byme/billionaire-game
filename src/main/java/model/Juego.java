@@ -13,6 +13,7 @@ public class Juego extends Consulta {
     private Pregunta pregunta;
     private boolean estadoJuego;
     private List<Integer> premios;
+    private boolean juegoGanado=false;
 
 
     public Juego( ) {
@@ -22,6 +23,8 @@ public class Juego extends Consulta {
         this.premios = Arrays.asList(1000,2000,3000,4000,10000);
     }
 
+
+
     public void actualizarEstadoJuego(String respuestaValidadaUsuario){
         if ( respuestaValidadaUsuario.contains("retirado")){
             System.out.println("Su puntaje fue:"+this.jugador.getPuntaje());
@@ -30,8 +33,14 @@ public class Juego extends Consulta {
             this.estadoJuego=true;
 
         }else if(respuestaValidadaUsuario.contains("continua")){
+            if (this.nivel!=5){
             this.actualizarDatoJugador();
             this.aumentarNivel();
+            }else{
+                this.actualizarDatoJugador();
+                this.juegoGanado=true;
+                this.estadoJuego=true;
+            }
         }else{
             //obción en la que pierde y no se lleva nada
             System.out.println("No se lleva premio");
@@ -39,6 +48,14 @@ public class Juego extends Consulta {
             insertarResultadoJugador(this.jugador.getNombre(),0,
             this.jugador.getPreguntas());
         }
+    }
+
+    public void ganador(){
+        System.out.println("Felicidades ha ganadoooo");
+        System.out.println("Su puntaje fue:"+this.jugador.getPuntaje());
+        this.estadoJuego=true;
+        insertarResultadoJugador(this.jugador.getNombre(),this.jugador.getPuntaje(),
+                this.jugador.getPreguntas());
     }
 
 
@@ -69,6 +86,11 @@ public class Juego extends Consulta {
     //mensajes
     public void mensajeDeReingresoDato(){
         System.out.print("Ingreso una obción que no exite, ingrese de nuevo la obción:");
+    }
+
+    public void mensajeIngresoNombre(){
+        System.out.println("Por favor escriba su nombre:");
+        System.out.print(">");
     }
 
     public void mensajeAdios(){System.out.println("Ha terminado el juego");}
@@ -102,11 +124,15 @@ public class Juego extends Consulta {
 
     public void setPregunta(Pregunta pregunta) {this.pregunta = pregunta;}
 
-    public boolean isEstadoJuego() {return estadoJuego;}
+    public boolean getEstadoJuego() {return this.estadoJuego;}
 
     public void setEstadoJuego(boolean estadoJuego) {this.estadoJuego = estadoJuego;}
 
     public List<Integer> getPremios() {return premios;}
 
     public void setPremios(List<Integer> premios) {this.premios = premios;}
+
+    public boolean isJuegoGanado() {return juegoGanado;}
+
+    public void setJuegoGanado(boolean juegoGanado) {this.juegoGanado = juegoGanado;}
 }
