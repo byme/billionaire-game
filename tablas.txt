@@ -1,0 +1,19 @@
+
+CREATE TABLE historico(
+   id SERIAL PRIMARY KEY,
+    nombre VARCHAR ( 50 ) NOT NULL,
+    puntuacion INT NOT NULL,
+    preguntas INT NOT NULL
+);
+
+CREATE TABLE preguntas(
+   id INT PRIMARY KEY,
+    pregunta VARCHAR ( 100 ) NOT NULL,
+    opcionA VARCHAR ( 100 ) NOT NULL,
+    opcionB VARCHAR ( 100 ) NOT NULL,
+    opcionC VARCHAR ( 100 ) NOT NULL,
+    opcionD VARCHAR ( 100 ) NOT NULL,
+    correcta VARCHAR ( 100 ) NOT NULL,
+    categoria INT NOT NULL
+ 
+);
